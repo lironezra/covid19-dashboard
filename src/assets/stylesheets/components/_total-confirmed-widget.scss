@@ -1,0 +1,22 @@
+.total-confirmed-number {
+  text-align: center;
+  background-color: #222;
+  padding: 12px 0;
+  border: 1px solid #363636;
+  margin-bottom: 10px;
+
+  .confiemed-header {
+    font-size: 13px;
+    color: white;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  .confiemed-number {
+    color: red;
+    font-size: 33px;
+    font-weight: 600;
+    box-sizing: border-box;
+    letter-spacing: .7px;
+  }
+}

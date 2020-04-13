@@ -1,3 +1,15 @@
+import L from 'leaflet';
+
+/**
+ * geoJsonToMarkers
+ */
+
+export function geoJsonToMarkers(geoJson, options) {
+  return new L.GeoJSON(geoJson, {
+    pointToLayer: pointToLayerMarkerCreator(options)
+  });
+}
+
 /**
  * promiseToFlyTo
  * @description
