@@ -5,23 +5,23 @@
   margin-bottom: 10px;
 
   .list-header {
-    height: 15%;
+    height: 8.5vh;
     box-sizing: border-box;
 
     p {
-      line-height: 17px;
+      line-height: 14px;
       margin: 0;
       width: 100%;
       text-align: center;
-      font-size: 12px;
+      font-size: 1vw;
       font-weight: bold;
       color: #BDBDBD;
-      padding: 6px;
+      padding-top: 6px;
     }
   }
 
   .list-content{
-    height: 85%;
+    height: 88%;
     overflow: hidden;
 
     ul {

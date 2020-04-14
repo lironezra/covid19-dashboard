@@ -227,7 +227,7 @@ const IndexPage = () => {
         <title>Coronavirus COVID-19 Global Cases</title>
       </Helmet>
 
-        <div className="total-confirmed-section">
+        <div className="left-section">
           <TotalConfirmedWidgetWithSpinner 
             totalConfirmedCases={state.totalConfirmedNumber}
             isLoading={state.isLoading} />

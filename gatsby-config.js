@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/covid19-dashboard",
   plugins: [
     'gatsby-plugin-resolve-src',
     'gatsby-plugin-sass',

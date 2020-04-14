@@ -6,7 +6,7 @@
     .header {
         color: white;
         text-align: center;
-        height: 20%;
+        height: 11vh;
 
         span {
             font-size: 10px;
@@ -14,15 +14,17 @@
 
         .number {
             display: block;
-            font-size: 33px;
+            // font-size: 33px;
+            font-size: 3vw;
             font-weight: 600;
             box-sizing: border-box;
             letter-spacing: .7px;
+
         }
     }
 
     .content {
-        height: 80%;
+      height: 84%;
         overflow: hidden;
 
         ul {
