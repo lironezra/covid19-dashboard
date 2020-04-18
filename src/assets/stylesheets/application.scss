@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;  
   padding: 10px;
   margin: 0;
   background: black;
@@ -18,10 +18,15 @@ body {
 .wrapper {
   min-height: 100vh;
   display: grid;
+  display: -ms-grid;
   grid-template-rows: auto 1fr auto;
-
+  -ms-grid-rows: auto 1fr auto;
 }
 
-main {
-  padding: 2em 0;
+p {
+  margin: 0;
+}
+
+a {
+  color:  #2493f2;;
 }
