@@ -61,7 +61,7 @@ const IndexPage = () => {
   const fetchData = async () => {
     const countriesDataResponse = await getCountriesData("critical");
     const globalDataResponse = await getGlobalData();
-    
+
     if(!countriesDataResponse.data || !globalDataResponse.data) {
       updateState(prev => {
         return {
@@ -331,8 +331,8 @@ const IndexPage = () => {
                 <TabPanel component={() => <About />} id="info" />
               </TabList>
             </Tabs>
+            <Slider>{`Last updated at: ${state.lastUpdated}`}</Slider>  
           </SectionWithSpinner>
-          <Slider>{`Last updated at: ${state.lastUpdated}`}</Slider>
         </>
       )
     }
