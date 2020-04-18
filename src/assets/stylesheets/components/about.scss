@@ -1,0 +1,30 @@
+.project-info-wrapper {
+    width: 80%;
+    overflow: scroll;
+    overflow-x: hidden;
+    color: #BDBDBD;
+    text-align: left;
+    font-size: 13px;
+    line-height: 20px;
+    background-color: #222;
+    border: 1px solid #363636;
+    padding: 5px;
+    
+    .content {
+        height: 100%;
+    }
+}
+
+@media only screen and (max-width : 767px) {
+    .project-info-wrapper {
+        width: 100%;
+        overflow: hidden;
+        color: #BDBDBD;
+        text-align: left;
+        font-size: 13px;
+        line-height: 20px;
+        padding: 11px;
+        background-color: #222;
+        border: 1px solid #363636;
+    }
+}
