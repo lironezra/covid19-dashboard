@@ -1,0 +1,62 @@
+.banner-wrapper-desktop {
+  height: 14%;
+  text-align: center;
+  background-color: #222;
+  padding: 12px 0;
+  border: 1px solid #363636;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  line-height: 27px;
+  
+  .banner-header {
+    font-size: 13px;
+    color: white;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  .banner-value {
+    color: red;
+    font-size: 2.8vw;
+    font-weight: 600;
+    box-sizing: border-box;
+    letter-spacing: .7px;
+  }
+}
+
+.banner-wrapper-mobile {
+  text-align: center;
+  background-color: #222;
+  padding: 12px 0;
+  border: 1px solid #363636;
+  vertical-align: middle;
+  line-height: 60px;
+
+  .banner-header {
+    font-size: 36px;
+    color: #BDBDBD;
+    display: block;
+  }
+
+  .banner-value {
+    font-size: 67px;
+    font-weight: 600;
+    letter-spacing: .7px;
+  }
+}
+
+.bConfirmed {
+  color: rgb(230, 0, 0);
+}
+
+.bDeaths {
+  color: #BDBDBD;
+}
+
+.bRecovered{
+    color: #7BB974;
+}
+
+.bDefault {
+  color: rgb(216, 216, 59);
+}
