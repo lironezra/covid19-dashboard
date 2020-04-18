@@ -1,0 +1,27 @@
+.slider-wrapper {
+    overflow: hidden;
+    height: 35px;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    width: 100%;
+    background: black;
+
+    .content {
+        padding: 11px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 300%;
+        animation: slideshow 8s linear infinite;
+        color: #BDBDBD;
+        text-align: center;
+        font-size: 13px;
+    }
+}
+
+@keyframes slideshow {
+    0%    { left: 0; }
+    100%  { left: -200%; }
+}
