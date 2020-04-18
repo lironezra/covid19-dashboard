@@ -59,11 +59,9 @@ const IndexPage = () => {
   
 
   const fetchData = async () => {
-    //debugger;
     const countriesDataResponse = await getCountriesData("critical");
     const globalDataResponse = await getGlobalData();
-    //debugger;
-    console.log(countriesDataResponse)
+    
     if(!countriesDataResponse.data || !globalDataResponse.data) {
       updateState(prev => {
         return {
