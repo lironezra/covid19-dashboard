@@ -10,6 +10,7 @@ export const getCountriesData = async (sortBy) => {
         return response;    
     } catch (e) {
         console.log(`Failed to fetch countries: ${e.message}`, e);
+        return e.message;
     }    
 }
 
@@ -20,6 +21,7 @@ export const getGlobalData = async () => {
         response = await axios.get(`${API_HOST}/all`);
         return response;    
     } catch (e) {
-        console.log(`Failed to fetch global data: ${e.message}`, e)
+        console.log(`Failed to fetch global data: ${e.message}`, e);
+        return e.message;
     }    
 }

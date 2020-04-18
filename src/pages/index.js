@@ -19,6 +19,7 @@ import BannerWidget from '../components/BannerWidget';
 import UpdatedAtWidget from '../components/UpdatedAtWidget';
 import About from '../components/About';
 import Slider from '../components/Slider';
+import NotFoundError from '../components/NotFoundError';
 
 // Mobile
 import ListBannerWidget from '../components/ListBannerWidget';
@@ -36,6 +37,7 @@ const DEFAULT_ZOOM = 1;
 
 const defaultState = {
   isLoading: true,
+  apiError: null,
   mapData: null,
   chartData: null,
   infectedCountries: 0,
@@ -57,10 +59,19 @@ const IndexPage = () => {
   
 
   const fetchData = async () => {
+    //debugger;
     const countriesDataResponse = await getCountriesData("critical");
     const globalDataResponse = await getGlobalData();
-
-    //console.log(object)
+    //debugger;
+    console.log(countriesDataResponse)
+    if(!countriesDataResponse.data || !globalDataResponse.data) {
+      updateState(prev => {
+        return {
+          ...prev,
+          apiError: countriesDataResponse
+        }
+      })
+    }
 
     setApplicationData(countriesDataResponse, globalDataResponse);
 
@@ -80,7 +91,7 @@ const IndexPage = () => {
     const { data: countriesData } = countriesDataResponse;
     const { data: globalData } = globalDataResponse;
 
-    if(countriesData && globalData) {
+    if (countriesData && globalData) {
       updateState(prev => {
         return {
           ...prev,
@@ -97,9 +108,8 @@ const IndexPage = () => {
           lastUpdated: new Date(globalData.updated).toLocaleString('en-GB')
         }
       })
-    } else {
-      console.log(countriesDataResponse)
     }
+
   }
 
   const getCountriesLongLat = data => {
@@ -241,6 +251,10 @@ const IndexPage = () => {
   }
 
   const renderContent = () => {
+    //debugger;
+    if(state.apiError) {
+      return <NotFoundError />;
+    }
 
     if (width <= 767) { 
       return (
