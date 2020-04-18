@@ -8,7 +8,7 @@ header {
   text-align: center;
   background-color: #222;
   border: 1px solid #363636;
-
+  
   .logo-wrapper {
     width: 10%;
     text-align: left;
@@ -27,12 +27,25 @@ header {
      text-align: left; 
 
     p {
+      font-size: 28px;
         font-weight: 400;
-        font-size: 28px;
         padding: 10px 0 ;
         margin: 0 0 0 20px;
         color: #BDBDBD;
         letter-spacing: 1px;
+    }
+  }
+}
+
+@media only screen and (max-width : 767px) {
+  header {
+  
+    .title-wrapper {   
+
+      p {
+        font-size: 4vw;
+        padding: 10px;
+      }
     }
   }
 }

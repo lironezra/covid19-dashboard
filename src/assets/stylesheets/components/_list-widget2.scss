@@ -6,9 +6,11 @@
     .header {
         color: white;
         text-align: center;
-        height: 11vh;
+        // height: 11vh;
+        height: 16%;
+        padding-top: 5px;
 
-        span {
+        p {
             font-size: 10px;
         }
 
@@ -25,7 +27,7 @@
 
     .content {
       height: 84%;
-        overflow: hidden;
+      overflow: hidden;
 
         ul {
             height: 100%;
@@ -59,7 +61,7 @@
                 font-size: 12px;
               }
             }
-          }
+        }
     }
 }
 
@@ -69,4 +71,26 @@
 
 .deaths {
     color: white;
+}
+
+@media only screen and (max-width : 767px) {
+  .total-death-wrapper {
+    height: 33.3vh;
+    margin-bottom: 10px;
+    
+    .header {
+      height: 6vh;
+  
+      p {
+        font-size: 14px;
+        padding-top: 6px;
+        color: #BDBDBD;
+        font-weight: bold;
+      }
+    }
+  
+    .content {
+      height: 82%;
+    }
+  }
 }

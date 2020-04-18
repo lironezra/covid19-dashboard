@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
+import { Tabs, TabList, TabPanel, Tab } from 'react-re-super-tabs'
 import L from 'leaflet';
 
 import { getCountriesData, getGlobalData } from '../services/Tracker';
-import { trackerLocationsToGeoJson } from '../lib/coronavirus'
+import { trackerLocationsToGeoJson } from '../lib/coronavirus';
+import { useWindowSize } from '../hooks/useWindowSize'
 
-
+import CustomTab from '../components/Tab';
 import WithSpinner from '../hoc/with-spinner';
 import Layout from '../components/Layout';
+import Section from '../components/Section';
 import Map from '../components/Map';
 import Chart from '../components/Chart'
 import ListWidget from '../components/ListWidget';
 import ListWidget2 from '../components/ListWidget2';
-import TotalConfirmedWidget from '../components/TotalConfirmedWidget';
+import BannerWidget from '../components/BannerWidget';
 import UpdatedAtWidget from '../components/UpdatedAtWidget';
+import About from '../components/About';
+import Slider from '../components/Slider';
 
-// Components with spinner HOC
-const TotalConfirmedWidgetWithSpinner = WithSpinner(TotalConfirmedWidget);
-const ListWidgetWithSpinner = WithSpinner(ListWidget);
-const ListWidget2WithSpinner = WithSpinner(ListWidget2); 
-const UpdatedAtWidgetWithSpinner = WithSpinner(UpdatedAtWidget);
-const MapWithSpinner = WithSpinner(Map);
-const ChartWithSpinner = WithSpinner(Chart);
+// Mobile
+import ListBannerWidget from '../components/ListBannerWidget';
+
+const SectionWithSpinner = WithSpinner(Section);
+
 
 const LOCATION = {
-  lat: 10,
+  lat: 7,
   lng: 22
 };
 
@@ -35,6 +38,7 @@ const defaultState = {
   isLoading: true,
   mapData: null,
   chartData: null,
+  infectedCountries: 0,
   countriesCordinates: null,
   totalCasesByCountry: null,
   totalRecoveredByCountry: null,
@@ -48,10 +52,16 @@ const defaultState = {
 
 const IndexPage = () => {
   const [state = {}, updateState] = useState(defaultState);
+  const [width, height] = useWindowSize();
+
+  
 
   const fetchData = async () => {
     const countriesDataResponse = await getCountriesData("critical");
     const globalDataResponse = await getGlobalData();
+
+    //console.log(object)
+
     setApplicationData(countriesDataResponse, globalDataResponse);
 
     updateState(prev => {
@@ -70,21 +80,26 @@ const IndexPage = () => {
     const { data: countriesData } = countriesDataResponse;
     const { data: globalData } = globalDataResponse;
 
-    updateState(prev => {
-      return {
-        ...prev,
-        mapData: countriesData,
-        chartData: getCriticalStateByCountry(countriesData),
-        countriesCordinates: getCountriesLongLat(countriesData),
-        totalCasesByCountry: getStateCasesByCountry(countriesData, "cases"),
-        totalRecoveredByCountry: getStateCasesByCountry(countriesData, "recovered"),
-        totalDeathsByCountry: getStateCasesByCountry(countriesData, "deaths"),
-        totalConfirmedNumber: globalData.cases,
-        totalRecoveredNumber: globalData.recovered,
-        totalDeathNumber: globalData.deaths,
-        lastUpdated: new Date(globalData.updated).toLocaleString()
-      }
-    })
+    if(countriesData && globalData) {
+      updateState(prev => {
+        return {
+          ...prev,
+          mapData: countriesData,
+          chartData: getCriticalStateByCountry(countriesData),
+          infectedCountries: getInfectedCountriesNumber(countriesData),
+          countriesCordinates: getCountriesLongLat(countriesData),
+          totalCasesByCountry: getStateCasesByCountry(countriesData, "cases"),
+          totalRecoveredByCountry: getStateCasesByCountry(countriesData, "recovered"),
+          totalDeathsByCountry: getStateCasesByCountry(countriesData, "deaths"),
+          totalConfirmedNumber: globalData.cases,
+          totalRecoveredNumber: globalData.recovered,
+          totalDeathNumber: globalData.deaths,
+          lastUpdated: new Date(globalData.updated).toLocaleString('en-GB')
+        }
+      })
+    } else {
+      console.log(countriesDataResponse)
+    }
   }
 
   const getCountriesLongLat = data => {
@@ -105,13 +120,13 @@ const IndexPage = () => {
     if (data) {
       // First filter the countries without country _id
       stateCases = data.filter(el => el.critical > 0).map(item => {
-          const container = {};
+        const container = {};
 
-            container.country = item.country;
-            container.number = item.critical;
+        container.country = item.country;
+        container.number = item.critical;
 
-            return container;
-        });
+        return container;
+      });
     }
     return stateCases;
   }
@@ -121,17 +136,21 @@ const IndexPage = () => {
     if (countries) {
       // First filter the countries without country _id
       stateCases = countries.filter(el => el.countryInfo._id).map(item => {
-          const container = {};
+        const container = {};
 
-            container.id = item.countryInfo._id;
-            container.country = item.country;
-            container[infectedType] = item[infectedType];
+        container.id = item.countryInfo._id;
+        container.country = item.country;
+        container[infectedType] = item[infectedType];
 
-            return container;
-        });
+        return container;
+      });
     }
     return stateCases;
-}
+  }
+
+  const getInfectedCountriesNumber = countries => {
+    return countries.filter(country => country.cases > 0).length;
+  }
 
   /**
    * mapEffect
@@ -221,74 +240,163 @@ const IndexPage = () => {
     })
   }
 
+  const renderContent = () => {
+
+    if (width <= 767) { 
+      return (
+        <>
+          <SectionWithSpinner className="tabs-container" isLoading={state.isLoading}>
+            <Tabs activeTab='totals'>
+              <TabList>
+                <Tab component={CustomTab} label='Totals' id='totals' />
+                <Tab component={CustomTab} label='World' id='world' />
+                <Tab component={CustomTab} label='Graphs' id='graphs' />
+                <Tab component={CustomTab} label='Map' id='map' />
+                <Tab component={CustomTab} label='About' id='info' />
+
+              </TabList>
+              <TabList>
+                <TabPanel component={ () =>
+                        <ListBannerWidget>
+                          <BannerWidget 
+                              header="Total Confirmed"
+                              value={state.totalConfirmedNumber}
+                              className="banner-wrapper-mobile"
+                              type="bConfirmed" />
+                          <BannerWidget 
+                              header="Total Deaths"
+                              value={state.totalDeathNumber}
+                              className="banner-wrapper-mobile"
+                              type="bDeaths" />
+                          <BannerWidget 
+                              header="Total Recovered"
+                              value={state.totalRecoveredNumber}
+                              className="banner-wrapper-mobile" 
+                              type="bRecovered"/>
+                          <BannerWidget 
+                              header="Infected Countries"
+                              value={state.infectedCountries}
+                              className="banner-wrapper-mobile"
+                              type="bDefault" />
+                      </ListBannerWidget>
+                } id='totals' />
+                <TabPanel component={() => 
+                      <>
+                        <ListWidget 
+                          title="Confirmed Cases By Country" 
+                          data={state.totalCasesByCountry} 
+                          type="cases"
+                          listItemClicked={handleListItemClicked} />
+                        <ListWidget2 
+                          type="recovered"
+                          data={state.totalRecoveredByCountry}
+                          title="Total Recovered By Country"
+                          listItemClicked={handleListItemClicked} />
+                        <ListWidget2 
+                          type="deaths"
+                          data={state.totalDeathsByCountry}
+                          title="Total Deaths By Country "
+                          listItemClicked={handleListItemClicked} />
+                      </>
+                        } 
+                id='world' />
+                <TabPanel component={() => 
+                        <div className="charts-wrapper mobile">
+                          <Chart
+                          className="bar-chart"
+                          title="Critical Cases By Country"
+                          margin={{
+                            top: 10, right: 10, left: 10, bottom: 50,
+                          }}
+                          data={state.chartData}
+                          xDataKey="country"
+                          barDataKey="number"
+                          />
+                        </div>} 
+                id='graphs' />
+                <TabPanel component={() => <Map {...mapSettings} />} 
+                id='map' />
+                <TabPanel component={() => <About />} id="info" />
+              </TabList>
+            </Tabs>
+          </SectionWithSpinner>
+          <Slider>{`Last updated at: ${state.lastUpdated}`}</Slider>
+        </>
+      )
+    }
+
+    return (
+      <>
+        <SectionWithSpinner className="left-section" isLoading={state.isLoading}>
+          <BannerWidget 
+            header="Total Confirmed"
+            value={state.totalConfirmedNumber}
+            className="banner-wrapper-desktop" />
+          <ListWidget 
+            title="Confirmed Cases by Country/Region/Sovereignty" 
+            data={state.totalCasesByCountry} 
+            type="cases"
+            listItemClicked={handleListItemClicked}
+            />
+          <UpdatedAtWidget 
+            lastUpdated={state.lastUpdated} />
+        </SectionWithSpinner>
+        <SectionWithSpinner className="middle-section" isLoading={state.isLoading}>
+                      <Map {...mapSettings} />
+          <div className="bottom-wrapper">
+
+            <div className="infected-countries">
+              <span className="banner-value">{state.infectedCountries}</span>
+              <span className="banner-title">Infected Countries</span>
+            </div>
+
+            <About />
+          </div>
+        </SectionWithSpinner>        
+        <SectionWithSpinner className="right-section" isLoading={state.isLoading}>
+        <div className="list-wigets-wrapper">
+          <div className="total-deaths-section">
+            <ListWidget2 
+              type="deaths"
+              data={state.totalDeathsByCountry}
+              title="Total Deaths"
+              titleValue={state.totalDeathNumber}
+              listItemClicked={handleListItemClicked} />
+          </div>
+          <div className="total-recovered-section">
+            <ListWidget2 
+              type="recovered"
+              data={state.totalRecoveredByCountry}
+              title="Total Recovered"
+              titleValue={state.totalRecoveredNumber}
+              listItemClicked={handleListItemClicked} />
+          </div>
+        </div>
+        <div className="charts-wrapper desktop">        
+          <Chart
+            className="bar-chart"
+            title="Critical Cases By Country"
+            // width={320}
+            // height={140}
+            margin={{
+              top: 10, right: 10, left: 10, bottom: 20,
+            }}
+            data={state.chartData}
+            xDataKey="country"
+            barDataKey="number"
+            />
+        </div>
+      </SectionWithSpinner>
+      </>
+    )
+  }
+
   return (
     <Layout pageName="home">
       <Helmet>
         <title>Coronavirus COVID-19 Global Cases</title>
       </Helmet>
-
-        <div className="left-section">
-          <TotalConfirmedWidgetWithSpinner 
-            totalConfirmedCases={state.totalConfirmedNumber}
-            isLoading={state.isLoading} />
-          <ListWidgetWithSpinner 
-            title="Confirmed Cases by Country/Region/Sovereignty" 
-            data={state.totalCasesByCountry} 
-            type="cases"
-            isLoading={state.isLoading}
-            listItemClicked={handleListItemClicked}/>
-          <UpdatedAtWidgetWithSpinner 
-            lastUpdated={state.lastUpdated}
-            isLoading={state.isLoading} />
-        </div>
-        
-        <MapWithSpinner {...mapSettings} isLoading={state.isLoading} />
-
-  
-        <div className="right-section">
-          <div className="list-wigets-wrapper">
-            <div className="total-deaths-section">
-              <ListWidget2WithSpinner 
-                type="deaths"
-                data={state.totalDeathsByCountry}
-                title="Total Death"
-                titleValue={state.totalDeathNumber}
-                isLoading={state.isLoading}
-                listItemClicked={handleListItemClicked} />
-            </div>
-            <div className="total-recovered-section">
-              <ListWidget2WithSpinner 
-                type="recovered"
-                data={state.totalRecoveredByCountry}
-                title="Total Recovered"
-                titleValue={state.totalRecoveredNumber}
-                isLoading={state.isLoading}
-                listItemClicked={handleListItemClicked} />
-            </div>
-          </div>
-          <ChartWithSpinner
-            className="bar-chart"
-            title="Critical Cases By Country"
-            width={320}
-            height={140}
-            data={state.chartData}
-            xDataKey="country"
-            barDataKey="number"
-            isLoading={state.isLoading}
-            />
-
-            {/* <LineChart width={310} height={140} className="line-chart"
-             data={chartData}
-             >
-              <Line type="monotone" dataKey="uv" stroke="#FFAA00" activeDot={{ r: 3 }}/>
-              <CartesianGrid stroke="#232" strokeDasharray="3 3"/>
-              <XAxis dataKey="name" interval="preserveStart"/>
-              <YAxis minTickGap="0" type="number" domain={[ 0, dataMax => (2000000) ]} interval="preserveEnd"/>
-              <Tooltip />
-            </LineChart> */}
-
-        </div>
-
+      {renderContent()}
     </Layout>
   );
 };

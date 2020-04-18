@@ -1,27 +1,26 @@
 .list-wrapper {
   background-color: #222;
   border: 1px solid #363636;
-  height: 70%;
+  height: 75%;
   margin-bottom: 10px;
 
   .list-header {
-    height: 8.5vh;
-    box-sizing: border-box;
+    height: 8vh;
 
     p {
       line-height: 14px;
       margin: 0;
       width: 100%;
       text-align: center;
-      font-size: 1vw;
       font-weight: bold;
       color: #BDBDBD;
-      padding-top: 6px;
+      font-size: 1vw;
+      padding-top: 10px;
     }
   }
 
   .list-content{
-    height: 88%;
+    height: 89.5%;
     overflow: hidden;
 
     ul {
@@ -57,6 +56,26 @@
           font-size: 15px;
         }
       }
+    }
+  }
+}
+
+@media only screen and (max-width : 767px) {
+  .list-wrapper {
+    height: 33.3vh;
+  
+    .list-header {
+      height: 6vh;
+      padding-top: 5px;
+  
+      p {
+        font-size: 14px;
+        padding-top: 6px;
+      }
+    }
+  
+    .list-content {
+      height: 82.5%;
     }
   }
 }

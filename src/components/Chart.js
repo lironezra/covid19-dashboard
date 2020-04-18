@@ -5,22 +5,23 @@ import { abbreviateNumber } from '../lib/util'
 
 import ChartTooltip from './ChartTooltip';
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Chart = ( props ) => {
-    const { title, className, width, height, data, xDataKey, barDataKey } = props;
-
-    return (
-        <div className="charts-wrapper">
-            <span>{title}</span>
+    const { title, className, margin, data, xDataKey, barDataKey } = props;
+    
+    if (data) { 
+      return (
+        // <div className="charts-wrapper">
+        <>
+          <span>{title}</span>
+          <ResponsiveContainer>
             <BarChart
               className={className}
-              width={width}
-              height={height}
+              // width={width}
+              // height={height}
               data={data}
-              // margin={{
-              //   top: 5, right: 30, left: 20, bottom: 5,
-              // }}
+              margin={margin}
             >
               <CartesianGrid  stroke="#234" strokeDasharray="3 3" />
               <XAxis 
@@ -34,16 +35,19 @@ const Chart = ( props ) => {
               <Tooltip content={<ChartTooltip />} />
               <Bar dataKey={barDataKey} fill="#FFAA00" />
             </BarChart>
-        </div>
-    );
+          </ResponsiveContainer>
+        </>
+      // </div>
+      );
+    }
+
+    return null;
 };
 
 Chart.propTypes = {
     title: PropTypes.string,
     className: PropTypes.string,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    data: PropTypes.array.isRequired
+    margin: PropTypes.object.isRequired
 };
 
 export default Chart;

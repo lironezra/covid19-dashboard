@@ -1,22 +1,32 @@
 .charts-wrapper {
-    height: 30%;
-    text-align: center;
-    background-color: #222;
-    // padding: 12px;
-    border: 1px solid #363636;
-    // margin-bottom: 20px;
-    // margin: 10px 0;
-    // padding-top: 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  // height: 29%;
+  text-align: center;
+  background-color: #222;
+  border: 1px solid #363636;
+  
 
-    span {
-      color: #BDBDBD;
-      font-size: 11px;
-      margin-top: 10px;
-    }
+  span {
+    color: #BDBDBD;
+    font-size: 11px;
+    margin-top: 10px;
+  }
 
-    .bar-chart {
-      margin: 0 auto;
-      top: 6%;
-      left: -4%;
-    }
+  .bar-chart {
+    margin: 0 auto;
+    top: 6%;
+    left: -4%;
+  }
+}
+
+.desktop {
+  height: 29%;
+}
+
+.mobile {
+  height: 50vh;
 }

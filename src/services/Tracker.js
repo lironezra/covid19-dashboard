@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_HOST = 'https://corona.lmao.ninja';
+const API_HOST = 'https://corona.lmao.ninja/v2';
 
 export const getCountriesData = async (sortBy) => {
     let response;
@@ -9,7 +9,7 @@ export const getCountriesData = async (sortBy) => {
         response = await axios.get(`${API_HOST}/countries${sortBy ? `?sort=${sortBy}` : null}`);
         return response;    
     } catch (e) {
-        console.log(`Failed to fetch countries: ${e.message}`, e)
+        console.log(`Failed to fetch countries: ${e.message}`, e);
     }    
 }
 

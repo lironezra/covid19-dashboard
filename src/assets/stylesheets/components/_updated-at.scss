@@ -1,22 +1,15 @@
 .updated-at {
-  height: 10%;
+  height: 8%;
   text-align: center;
   background-color: #222;
   border: 1px solid #363636;
   padding: 5px;
-  line-height: 15px;
+  line-height: normal;
+  vertical-align: middle;
 
   span, p {
     color: #BDBDBD;
     letter-spacing: .5px;
-  }
-
-  span {
-    font-size: 9px;
-  }
-
-  p {
     font-size: 1vw;
-    margin: 0;
   }
 }

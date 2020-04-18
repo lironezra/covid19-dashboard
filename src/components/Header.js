@@ -6,6 +6,7 @@ import Logo from '../assets/images/covid19-logo.png';
 // import Container from 'components/Container';
 
 const Header = () => {
+
   return (
     <header>
       <div className="logo-wrapper">

@@ -13,13 +13,14 @@ const Layout = ({ children, pageName }) => {
     className = `${className} page-${pageName}`;
   }
 
+
   return (
     <>
       <Helmet bodyAttributes={{ class: className }}>
         <title>Gatsby Site</title>
       </Helmet>
       <div className="wrapper">
-        <Header />
+        <Header/>
         <main>{ children }</main>
       </div>
     </>
