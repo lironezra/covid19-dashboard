@@ -1,94 +1,93 @@
 .total-death-wrapper {
-    background-color: #222;
-    border: 1px solid #363636;;
-    height: 100%;
+  background-color: #222;
+  border: 1px solid #363636;
+  height: 100%;
 
-    .header {
-        color: white;
-        text-align: center;
-        // height: 11vh;
-        height: 16%;
-        padding-top: 5px;
+  .header {
+    color: white;
+    text-align: center;
+    // height: 11vh;
+    height: 16%;
+    padding-top: 5px;
 
-        p {
-            font-size: 10px;
+    p {
+      font-size: 10px;
+    }
+
+    .number {
+      display: block;
+      // font-size: 33px;
+      font-size: 2.8vw;
+      font-weight: 600;
+      box-sizing: border-box;
+      letter-spacing: 0.7px;
+    }
+  }
+
+  .content {
+    height: 84%;
+    overflow: hidden;
+
+    ul {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      overflow: auto;
+
+      li {
+        padding: 5px 10px;
+        border-bottom: 0.5px solid #5c5c5c;
+        border-top: 0.5px solid #5c5c5c;
+        cursor: pointer;
+
+        &:first-child {
+          border-top: none;
+        }
+
+        &:last-child {
+          border-bottom: none;
         }
 
         .number {
-            display: block;
-            // font-size: 33px;
-            font-size: 3vw;
-            font-weight: 600;
-            box-sizing: border-box;
-            letter-spacing: .7px;
-
+          font-size: 14px;
+          margin-right: 5px;
         }
-    }
 
-    .content {
-      height: 84%;
-      overflow: hidden;
-
-        ul {
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            overflow: auto;      
-    
-            li {
-              padding: 5px 10px;
-              border-bottom: .5px solid #5c5c5c;
-              border-top: .5px solid #5c5c5c;
-              cursor: pointer;
-    
-              &:first-child {
-                border-top: none;
-              }
-    
-              &:last-child {
-                border-bottom: none;
-              }
-    
-              .number {
-                font-size: 14px;
-                margin-right: 5px;
-              }
-    
-              .country{
-                display: block;
-                color: #BDBDBD;
-                font-size: 12px;
-              }
-            }
+        .country {
+          display: block;
+          color: #bdbdbd;
+          font-size: 12px;
         }
+      }
     }
+  }
 }
 
 .recovered {
-    color: rgb(112, 168, 0);
+  color: rgb(112, 168, 0);
 }
 
 .deaths {
-    color: white;
+  color: white;
 }
 
-@media only screen and (max-width : 767px) {
+@media only screen and (max-width: 767px) {
   .total-death-wrapper {
     height: 33.3vh;
     margin-bottom: 10px;
-    
+
     .header {
       height: 6vh;
-  
+
       p {
         font-size: 14px;
         padding-top: 6px;
-        color: #BDBDBD;
+        color: #bdbdbd;
         font-weight: bold;
       }
     }
-  
+
     .content {
       height: 82%;
     }
